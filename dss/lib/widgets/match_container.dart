@@ -1,5 +1,58 @@
 import 'package:flutter/material.dart';
 
+String formatDate(String dateString) {
+  DateTime date = DateTime.parse(dateString);
+  String monthAbbreviation = _getMonthAbbreviation(date.month);
+  String dayWithSuffix = _getDayWithSuffix(date.day);
+  return '$monthAbbreviation $dayWithSuffix';
+}
+
+String _getMonthAbbreviation(int month) {
+  switch (month) {
+    case 1:
+      return 'Jan';
+    case 2:
+      return 'Feb';
+    case 3:
+      return 'Mar';
+    case 4:
+      return 'Apr';
+    case 5:
+      return 'May';
+    case 6:
+      return 'Jun';
+    case 7:
+      return 'Jul';
+    case 8:
+      return 'Aug';
+    case 9:
+      return 'Sep';
+    case 10:
+      return 'Oct';
+    case 11:
+      return 'Nov';
+    case 12:
+      return 'Dec';
+    default:
+      return '';
+  }
+}
+
+String _getDayWithSuffix(int day) {
+  if (day >= 11 && day <= 13) {
+    return '$day''th';
+  }
+  switch (day % 10) {
+    case 1:
+      return '$day''st';
+    case 2:
+      return '$day''nd';
+    case 3:
+      return '$day''rd';
+    default:
+      return '$day''th';
+  }
+}
 class MatchContainer extends StatelessWidget {
   final int matchID;
   final String event;
@@ -9,9 +62,6 @@ class MatchContainer extends StatelessWidget {
   final String startDate;
   final String team1;
   final String team2;
-  final int team1Score;
-  final int team2Score;
-  final String time;
   final VoidCallback onTap;
 
   MatchContainer({
@@ -24,9 +74,6 @@ class MatchContainer extends StatelessWidget {
     required this.startDate,
     required this.team1,
     required this.team2,
-    required this.team1Score,
-    required this.team2Score,
-    required this.time,
     required this.onTap,
   }) : super(key: key);
 
@@ -70,7 +117,7 @@ class MatchContainer extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, bottom: 15),
-                    child: Text('$event - $startDate'),
+                    child: Text('$event - ${formatDate(startDate)}'),
                   ),
                 ],
               ),
@@ -83,7 +130,7 @@ class MatchContainer extends StatelessWidget {
                 onPressed: onTap,
                 child: const Text(
                   '+',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 70),
                 ),
               ),
             ),

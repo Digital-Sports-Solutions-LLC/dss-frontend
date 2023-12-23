@@ -7,9 +7,6 @@ class Match {
   String startDate;
   String team1;
   String team2;
-  int team1Score;
-  int team2Score;
-  String time;
 
   Match({
     required this.matchID,
@@ -20,9 +17,6 @@ class Match {
     required this.startDate,
     required this.team1,
     required this.team2,
-    required this.team1Score,
-    required this.team2Score,
-    required this.time,
   });
 
 }
