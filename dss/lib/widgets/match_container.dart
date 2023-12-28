@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dss/pages/referee_page.dart';
 
 String formatDate(String dateString) {
   DateTime date = DateTime.parse(dateString);
@@ -40,19 +41,20 @@ String _getMonthAbbreviation(int month) {
 
 String _getDayWithSuffix(int day) {
   if (day >= 11 && day <= 13) {
-    return '$day''th';
+    return '$day' 'th';
   }
   switch (day % 10) {
     case 1:
-      return '$day''st';
+      return '$day' 'st';
     case 2:
-      return '$day''nd';
+      return '$day' 'nd';
     case 3:
-      return '$day''rd';
+      return '$day' 'rd';
     default:
-      return '$day''th';
+      return '$day' 'th';
   }
 }
+
 class MatchContainer extends StatelessWidget {
   final int matchID;
   final String event;
@@ -64,7 +66,7 @@ class MatchContainer extends StatelessWidget {
   final String team2;
   final VoidCallback onTap;
 
-  MatchContainer({
+  const MatchContainer({
     Key? key,
     required this.matchID,
     required this.event,
@@ -84,7 +86,7 @@ class MatchContainer extends StatelessWidget {
         width: double.infinity,
         height: 140, // Adjust height as needed
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Colors.red[200],
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
@@ -127,7 +129,15 @@ class MatchContainer extends StatelessWidget {
               height: double.infinity,
               alignment: Alignment.center,
               child: TextButton(
-                onPressed: onTap,
+                onPressed: () {
+                  // Navigate to the referee page when the '+' button is clicked
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RefereePage(match: this),
+                    ),
+                  );
+                },
                 child: const Text(
                   '+',
                   style: TextStyle(fontSize: 70),

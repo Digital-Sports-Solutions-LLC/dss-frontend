@@ -1,5 +1,4 @@
 import 'package:dss/models/match.dart';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:dss/constants/api.dart';
 import 'package:http/http.dart' as http;
@@ -12,12 +11,13 @@ class HomePage extends StatefulWidget {
 
   // This widget is the root of your application.
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   List<Match> matchesList = [];
-  bool isLoading = false;
+  bool isLoading = true;
   void fetchData() async {
     try {
       final response = await http.get(Uri.parse("${api}match/api/"));
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           type: element['match_type']['title'],
           status: element['status'],
           startDate: element['court_event']['event']['startDate'],
-          team1: element['team1']['teamAcronym'],
+          team1: element['team1']['teamAcronym'],        
           team2: element['team2']['teamAcronym'],
         );
         matchesList.add(match);
@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(),
+    return Scaffold (
+      appBar: const CustomAppBar(title: "DSS"),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),

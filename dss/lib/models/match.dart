@@ -4,7 +4,7 @@ class Match {
   int court;
   String type;
   String status;
-  String startDate;
+  String startDate;  
   String team1;
   String team2;
 
@@ -18,5 +18,4 @@ class Match {
     required this.team1,
     required this.team2,
   });
-
 }
