@@ -27,7 +27,7 @@ class RefereePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ShotClockPage(team: match.team1)),
+                      MaterialPageRoute(builder: (context) => ShotClockPage(number: 1, team: match.team1, match_id: match.matchID)),
                     );
                   },  
                   child: Text(match.team1),
@@ -36,7 +36,7 @@ class RefereePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ShotClockPage(team: match.team2)),
+                      MaterialPageRoute(builder: (context) => ShotClockPage(number: 2, team: match.team2, match_id: match.matchID)),
                     );
                   },
                   child: Text(match.team2),

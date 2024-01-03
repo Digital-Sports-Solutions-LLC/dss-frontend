@@ -1,12 +1,22 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:dss/widgets/app_bar.dart';
 import 'package:dss/widgets/match_container.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ShotClockPage extends StatefulWidget {
+  final int number;
   final String team;
+  final int match_id;
 
-  const ShotClockPage({Key? key, required this.team}) : super(key: key);
+  const ShotClockPage(
+      {Key? key,
+      required this.number,
+      required this.team,
+      required this.match_id})
+      : super(key: key);
 
   @override
   _ShotClockPageState createState() => _ShotClockPageState();
@@ -22,9 +32,24 @@ class _ShotClockPageState extends State<ShotClockPage> {
 
   late Timer _timer;
 
+  late WebSocketChannel channel;
+
   @override
   void initState() {
     super.initState();
+    int matchId = widget.match_id;
+    //channel = WebSocketChannel.connect(Uri.parse('ws://127.0.0.1:8000/ws/'));
+    // channel.stream.listen((message) {
+    //   final data = jsonDecode(message);
+    //   setState(() {
+    //     int number = widget.number;
+    //     DateTime intend = DateTime.parse(data['team$number''_SC']);
+    //     if (intend.toString() == Null) {
+    //       _endTime = intend;
+    //     }
+    //   });
+    // });
+
     _difference = _endTime.difference(DateTime.now().toUtc());
     _startTimer();
   }
@@ -32,6 +57,7 @@ class _ShotClockPageState extends State<ShotClockPage> {
   @override
   void dispose() {
     _timer.cancel();
+    channel?.sink.close(); // Close the WebSocket connection
     super.dispose();
   }
 
@@ -56,6 +82,7 @@ class _ShotClockPageState extends State<ShotClockPage> {
       _endTime =
           DateTime.now().toUtc().add(Duration(seconds: _isMax ? 15 : 10));
       _difference = _endTime.difference(DateTime.now().toUtc());
+      //channel?.sink.add(jsonEncode({'team${widget.number}_SC': _endTime}));  // Send a message to the server
     });
   }
 
